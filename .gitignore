@@ -31,7 +31,7 @@ hs_err_pid*
 
 # vscode + eclipse
 .settings/
-.project
+#.project
 .classpath
 .factorypath
 .attach_pid*
