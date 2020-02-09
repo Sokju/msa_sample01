@@ -1,0 +1,42 @@
+spring:  
+  application:
+    name: msa-zuul-server
+  sleuth:
+    sampler:
+      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+  zipkin:
+    base-url: http://msa-zipkin-server:9411 #ZipKin Server      
+    
+server:
+  port: 9090
+    
+#Eureka Client   
+eureka:
+  client:
+    region: default
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://msa-eureka-server:8761/eureka/
+            
+#Zuul Routing    
+zuul:
+  ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
+  #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
+  routes:
+    msa-svc-member:               #routing id
+      path: /member/**            #zuul context root
+      serviceId: msa-svc-member   #spring application name
+      stripPrefix: false  
+
+    msa-svc-order: 
+      path: /order/**  
+      serviceId: msa-svc-order   
+      stripPrefix: false  
+
+hystrix:
+  command:
+    member:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 600000      
+      

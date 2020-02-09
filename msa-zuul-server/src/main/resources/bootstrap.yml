@@ -1,0 +1,8 @@
+#Config Server      
+spring:
+  cloud:
+    config:
+      uri: http://msa-config-server:8888
+      name: msa-zuul-server
+      fail-fast: true
+      

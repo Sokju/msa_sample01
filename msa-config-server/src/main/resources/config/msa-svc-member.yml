@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: msa-svc-member
+  sleuth:
+    sampler:
+      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+  zipkin:
+    base-url: http://msa-zipkin-server:9411 #ZipKin Server      
+    
+  data:
+    mongodb:
+      host: mongodb-standalone-0.mongodb
+      username: user
+      password: password
+      database: sample01
+      port: 27017
+    
+server:
+  port: 9091
+
+#Eureka Client   
+eureka:
+  instance:
+    prefer-ip-address: true         #HostName이 IP 에 의존하여 설정
+  client:
+    registerWithEureka: true       #자체 서비스를 eureka 서버에 등록 할지 여부
+    fetchRegistry: true            #client 서비스가 eureka 서버로 부터 서비스 리스트 정보를 local에 caching 할지 여부
+    region: default
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://msa-eureka-server:8761/eureka/
+
+feign:
+  client:
+    config:
+      default:                  # or feign name
+        connectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
+        readTimeout: 5000       # Connection 맺은 후 response 받기 까지 delay time
+
+#turbine 수집을 위한 endpoint 활성화        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"     
+
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /member/api-docs        

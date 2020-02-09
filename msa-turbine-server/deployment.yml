@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    run: msa-turbine-server
+  name: msa-turbine-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: msa-turbine-server
+  template:
+    metadata:
+      labels:
+        run: msa-turbine-server
+    spec:
+      containers:
+      - image: 192.168.100.102:5000/msasmp01/msa-turbine-server:1.0
+        imagePullPolicy: Always
+        name: msa-turbine-server
+        ports:
+        - containerPort: 9010
+          protocol: TCP
+      restartPolicy: Always
+

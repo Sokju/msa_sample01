@@ -1,0 +1,11 @@
+#Config Server      
+spring:
+  cloud:
+    config:
+      uri: http://msa-config-server:8888 
+      name: msa-turbine-server
+      fail-fast: true
+      #password: password
+      #username: user
+
+        
