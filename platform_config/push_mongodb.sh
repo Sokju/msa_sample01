@@ -6,3 +6,6 @@ docker pull rabbitmq:3-management
 docker tag rabbitmq:3-management 192.168.100.102:5000/msasmp01/rabbitmq:3-management
 docker push 192.168.100.102:5000/msasmp01/rabbitmq:3-management
 
+#mongo -u admin -p password
+#use sample01
+#db.createUser({ user: 'user', pwd: 'password', roles: [  {role:'readWrite', db:'sample01'} ]})

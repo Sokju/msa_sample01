@@ -17,6 +17,13 @@ spec:
       containers:
       - name: rabbitmq
         image: 192.168.100.102:5000/msasmp01/rabbitmq:3-management
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 15672
+          - name: amqp
+            protocol: TCP
+            containerPort: 5672
         env:
         - name: "RABBITMQ_ERLANG_COOKIE"
           value: "1WqgH8N2v1qDBDZDbNy8Bg9IkPWLEpu79m6q+0t36lQ="
@@ -24,7 +31,7 @@ spec:
         - mountPath: /var/lib/rabbitmq
           name: rabbitmq-data
       nodeSelector:
-        kubernetes.io/hostname: worker3
+        kubernetes.io/hostname: worker2
       volumes:
         - name: rabbitmq-data
           hostPath:
@@ -39,5 +46,31 @@ metadata:
     app: rabbitmq
 spec:
   clusterIP: None
+  ports:           
+   - name: http    
+     protocol: TCP 
+     port: 15672
+     targetPort: 15672
+   - name: amqp
+     protocol: TCP
+     port: 5672
+     targetPort: 5672
   selector:
     app: rabbitmq
+---
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rabbitmq
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: rabbitmq.msasmp01.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rabbitmq
+          servicePort: 15672
+
