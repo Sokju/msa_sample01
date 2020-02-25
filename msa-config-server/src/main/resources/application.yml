@@ -21,9 +21,9 @@ spring:
      active: native
 
 #eureka client     
-eureka:
-  client:
-    region: default
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: http://msa-eureka-server:8761/eureka/
+#eureka:
+#  client:
+#    region: default
+#    registryFetchIntervalSeconds: 5
+#    serviceUrl:
+#      defaultZone: http://msa-eureka-server:8761/eureka/

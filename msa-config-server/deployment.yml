@@ -18,9 +18,32 @@ spec:
       containers:
       - image: 192.168.100.102:5000/msasmp01/msa-config-server:1.0
         imagePullPolicy: Always
+        #IfNotPresent: 이미지가 로컬에 이미 존재하지 않으면 이미지가 풀(Pull) 
+        #Always: 파드가 시작될 때마다 이미지가 풀(Pull)
+        #imagePullPolicy가 생략되어 있고, 이미지 태그가 :latest 이거나 생략되어 있다면 Always가 적용
+        #imagePullPolicy가 생략되어 있고, 이미지 태그가 존재하지만 :latest가 아니라면 IfNotPresent가 적용
+        #Never: 이미지가 로컬에 존재한다고 가정한다. 이미지를 풀(Pull) 하기 위해 시도하지 않음
         name: msa-config-server
         ports:
         - containerPort: 8888
           protocol: TCP
-      restartPolicy: Always
+        readinessProbe:
+          httpGet:                #probe type : exec(bash실행으로 체크 : ex 파일 유무체크), tcpSocket(TCP 특정포트 연결체크), httpGet(HTTP Get Request 점검)
+            path: /actuator/health
+            port: 8888            
+          initialDelaySeconds: 60 #컨테이너 생성 후 probe 초기화하기 전 대기 시간(초)
+          periodSeconds: 10       #probe 실행 주기(Default : 10초, 최소 1초)
+          timeoutSeconds: 3       #probe Timeout 대기 시간(Default : 1초, 최소 1초)
+          failureThreshold: 3     #실패 판단까지의 시도 회수(Default : 3회)
+          successThreshold: 1     #실행 후 성공 판단까지의 시도 회수(Default : 1회)
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8888
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+          successThreshold: 1
+      restartPolicy: Always       #항상(Always), 실패 시(OnFailure), 절대 안 함(Never) 값으로 설정 가능, Default 는 Always
 

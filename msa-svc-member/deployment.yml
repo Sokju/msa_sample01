@@ -22,5 +22,23 @@ spec:
         ports:
         - containerPort: 9091
           protocol: TCP
+        readinessProbe:
+          httpGet:                #probe type : exec(bash실행으로 체크 : ex 파일 유무체크), tcpSocket(TCP 특정포트 연결체크), httpGet(HTTP Get Request 점검)
+            path: /actuator/health
+            port: 9091            
+          initialDelaySeconds: 60 #컨테이너 생성 후 probe 초기화하기 전 대기 시간(초)
+          periodSeconds: 10       #probe 실행 주기(Default : 10초, 최소 1초)
+          timeoutSeconds: 3       #probe Timeout 대기 시간(Default : 1초, 최소 1초)
+          failureThreshold: 3     #실패 판단까지의 시도 회수(Default : 3회)
+          successThreshold: 1     #실행 후 성공 판단까지의 시도 회수(Default : 1회)
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9091
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+          successThreshold: 1           
       restartPolicy: Always
 
