@@ -1,9 +1,10 @@
 #Hystrix Turbine Server
+server:
+  port: 9010
+
 spring:
   application:
     name: msa-turbine-server
-server:
-  port: 9010
 
 #Eureka Client   
 eureka:
@@ -20,6 +21,5 @@ eureka:
 turbine:
   appConfig: msa-svc-member,msa-svc-order
   clusterNameExpression: new String("default")      
-  
   
  #Stream URL : http://msa-turbine-server:9010/turbine.stream

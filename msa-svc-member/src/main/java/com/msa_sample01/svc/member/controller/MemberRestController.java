@@ -61,7 +61,7 @@ public class MemberRestController {
 	   @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
 	   @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
 	}, threadPoolProperties = @HystrixProperty(name = "coreSize", value = "100"))
-	@RequestMapping(value = "/member/{memberName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/member/{memberName}", method = RequestMethod.GET)
 	public Member getMemberByName(@PathVariable("memberName") String memberName) {
 		
 		log.debug("############ getMemberByName : " + memberName);
@@ -80,7 +80,7 @@ public class MemberRestController {
 	}
 
 
-	@RequestMapping(value = "/member", method = RequestMethod.POST)
+	@RequestMapping(value = "/v1/member", method = RequestMethod.POST)
 	public void createMember(@Valid @RequestBody Member member) {
 		
 		log.debug("############ createMember : " + member.getName());
@@ -89,7 +89,7 @@ public class MemberRestController {
 	}
 	
 	@HystrixCommand
-	@RequestMapping(value = "/member", method = RequestMethod.PUT)
+	@RequestMapping(value = "/v1/member", method = RequestMethod.PUT)
 	public void updateMember(@Valid @RequestBody Member member) {
 		
 		log.debug("############ updateMember : " + member.getName());
@@ -98,7 +98,7 @@ public class MemberRestController {
 	}
 	
 	@HystrixCommand
-	@RequestMapping(value = "/member/{memberName}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/v1/member/{memberName}", method = RequestMethod.DELETE)
 	public void deleteMemberByName(@PathVariable("memberName") String memberName) {
 		
 		log.debug("############ updateMember : " + memberName);
@@ -107,7 +107,7 @@ public class MemberRestController {
 	}
 	
 	@HystrixCommand(fallbackMethod = "fallbackFunction")
-	@RequestMapping(value = "/member/fallbackTest", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/member/fallbackTest", method = RequestMethod.GET)
 	public String fallbackTest() throws Throwable{
 		throw new Throwable("fallbackTest");
 	}

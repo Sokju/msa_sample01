@@ -1,18 +1,34 @@
+server:
+  port: 9090
+
 spring:  
   application:
     name: msa-zuul-server
   sleuth:
     sampler:
-      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+      probability: 0.1    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
     base-url: http://msa-zipkin-server:9411 #ZipKin Server      
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB         
     
-server:
-  port: 9090
-    
+#oauth2 authorization server
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://msa-auth-server:9080/user
+    client:
+      accessTokenUri: http://msa-auth-server:9080/oauth/token
+          
 #Eureka Client   
 eureka:
+  instance:
+    prefer-ip-address: true         #HostName이 IP 에 의존하여 설정
   client:
+    registerWithEureka: true       #자체 서비스를 eureka 서버에 등록 할지 여부
+    fetchRegistry: true            #client 서비스가 eureka 서버로 부터 서비스 리스트 정보를 local에 caching 할지 여부
     region: default
     registryFetchIntervalSeconds: 5
     serviceUrl:
@@ -22,21 +38,37 @@ eureka:
 zuul:
   ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
   #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
+  ignore-security-headers: false  #spring security를 쓰고 시큐리티헤더를 통과
   routes:
     msa-svc-member:               #routing id
-      path: /member/**            #zuul context root
+      path: /v1/member/**         #zuul context root
+      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
-
     msa-svc-order: 
-      path: /order/**  
+      path: /v1/order/**  
+      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-order   
       stripPrefix: false  
+    auth-server:
+      path: /oauth/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: msa-auth-server
+      stripPrefix: false  
+
+# 타임아웃 설정   
+  host:
+    connect-timeout-millis: 3000
+    socket-timeout-millis: 3000
 
 hystrix:
   command:
     member:
       isolation:
         thread:
-          timeoutInMilliseconds: 600000      
-      
+          timeoutInMilliseconds: 600000
+          
+ribbon:
+   ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
+   ReadTimeout: 2000       # Connection 맺은 후 response 받기 까지 delay time
+

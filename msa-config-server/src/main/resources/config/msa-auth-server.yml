@@ -1,14 +1,9 @@
 server:
-  port: 9092
-
+  port: 9080
+  
 spring:
   application:
-    name: msa-svc-order
-  sleuth:
-    sampler:
-      probability: 0.1  #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
-  zipkin:
-    base-url: http://msa-zipkin-server:9411 #ZipKin Server      
+    name: msa-auth-server
     
   data:
     mongodb:
@@ -30,15 +25,3 @@ eureka:
     serviceUrl:
       defaultZone: http://msa-eureka-server:8761/eureka/
 
-#turbine 수집을 위한 endpoint 활성화        
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-        
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /v1/order/api-docs                   

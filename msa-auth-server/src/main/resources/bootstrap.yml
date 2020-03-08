@@ -1,0 +1,10 @@
+#Config Server      
+spring:
+  cloud:
+    config:
+      uri: http://msa-config-server:8888
+      name: msa-auth-server
+      fail-fast: true
+      #discovery: 
+      #  service-id: msa-config-server
+      #  enabled: true

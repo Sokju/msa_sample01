@@ -1,12 +1,15 @@
+server:
+  port: 9091
+
 spring:
   application:
     name: msa-svc-member
   sleuth:
     sampler:
-      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+      probability: 0.1    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
     base-url: http://msa-zipkin-server:9411 #ZipKin Server      
-    
+
   data:
     mongodb:
       host: mongodb-standalone-0.mongodb
@@ -14,10 +17,7 @@ spring:
       password: password
       database: sample01
       port: 27017
-    
-server:
-  port: 9091
-
+      
 #Eureka Client   
 eureka:
   instance:
@@ -44,9 +44,8 @@ management:
       exposure:
         include: "*"     
 
-
 springfox:
   documentation:
     swagger:
       v2:
-        path: /member/api-docs        
+        path: /v1/member/api-docs        

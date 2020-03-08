@@ -18,7 +18,7 @@ public interface OrderServiceClient {
 //	@RequestMapping(value = "/order", method = RequestMethod.POST)
 //	ResponseEntity<Member> order(@RequestBody Member member);
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
+	@RequestMapping(value = "/v1/order", method = RequestMethod.POST)
 	void order(String member);
 
 }

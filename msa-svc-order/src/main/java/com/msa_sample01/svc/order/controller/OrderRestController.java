@@ -26,7 +26,7 @@ public class OrderRestController {
 //	private KafkaProducer kafkaProducer;
 	
 	@HystrixCommand
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
+	@RequestMapping(value = "/v1/order", method = RequestMethod.POST)
 //	public ResponseEntity<OrderCVO> order(@RequestBody OrderCVO orderCVO) {
 //		
 //		//order

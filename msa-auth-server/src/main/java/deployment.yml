@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    run: msa-auth-server
+  name: msa-auth-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: msa-auth-server
+  template:
+    metadata:
+      labels:
+        run: msa-auth-server
+    spec:
+      containers:
+      - image: 192.168.100.102:5000/msasmp01/msa-auth-server:1.0
+        imagePullPolicy: Always
+        name: msa-auth-server
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+      restartPolicy: Always
+
+

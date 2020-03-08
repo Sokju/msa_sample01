@@ -41,6 +41,7 @@
         <module>msa-svc-member</module>
         <module>msa-svc-order</module>
         <module>msa-turbine-server</module>
+        <module>msa-auth-server</module>
     </modules>
   
 </project>
