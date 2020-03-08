@@ -1,0 +1,30 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: ingress-nginx
+    namespace: ingress-nginx
+spec: 
+   type: ClusterIP
+   selector:
+       app.kubernetes.io/name: ingress-nginx
+       app.kubernetes.io/part-of: ingress-nginx
+   ports:
+   - name: port-1
+     port: 80
+     targetPort: 80
+   - name: port-2
+     port: 443
+     targetPort: 443
+   clusterIP: 10.233.37.44
+   externalIPs:
+   - 192.168.100.107
+#spec:
+#    ports:
+#    - name: service
+#      port: 80
+#      targetPort: 80
+#    selector:
+#        app.kubernetes.io/name: ingress-nginx
+#        app.kubernetes.io/part-of: ingress-nginx
+#    externalIPs:
+#    - 192.168.100.107
