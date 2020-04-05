@@ -11,6 +11,8 @@ public class Member {
 
 	private String comment;
 	
+	private String email;
+	
 	public String getName() {
 		return name;
 	}
@@ -25,5 +27,24 @@ public class Member {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public Member() {
+		super();
+	}
+	
+	public Member(String name, String comment, String email) {
+		super();
+		this.name = name;
+		this.comment = comment;
+		this.email = email;
 	}
 }

@@ -1,9 +1,13 @@
 package com.msa_sample01.svc.member.service;
 
+import java.util.List;
+
 import com.msa_sample01.svc.member.domain.Member;
 
 public interface MemberService {
 
+	List<Member> getMemberList();
+	
 	/**
 	 * 멤버검색
 	 *

@@ -1,5 +1,8 @@
 package com.msa_sample01.svc.member.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +12,6 @@ import org.springframework.util.Assert;
 import com.msa_sample01.svc.member.client.OrderServiceClient;
 import com.msa_sample01.svc.member.domain.Member;
 import com.msa_sample01.svc.member.repository.MemberRepository;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -22,7 +23,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository repository;
+	
+	private List<Member> users = Arrays.asList(new Member("james", "tester", "james@crossent.com"),
+			new Member("john", "admin", "john@crossent.com"),
+			new Member("harry", "developer", "harray@crossent.com"));
 
+	@Override
+	public List<Member> getMemberList() {
+		return users;
+	}
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */

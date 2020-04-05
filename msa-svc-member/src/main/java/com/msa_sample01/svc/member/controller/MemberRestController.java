@@ -1,5 +1,7 @@
 package com.msa_sample01.svc.member.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -67,6 +69,12 @@ public class MemberRestController {
 		log.debug("############ getMemberByName : " + memberName);
 		
 		return memberService.findByName(memberName);
+	}
+	
+	@RequestMapping(value = "/v1/member", method = RequestMethod.GET)
+	public List<Member> getMemberList() {
+		
+		return memberService.getMemberList();
 	}
 	
 	public Member fallbackMemberByName(@PathVariable("memberName") String memberName) {
