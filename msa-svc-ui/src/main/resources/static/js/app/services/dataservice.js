@@ -10,13 +10,25 @@ angular.module('oauthApp')
 
         var orderApi = gwUrl + '/v1/order';
 
-        var loggedInUserApi = gwUrl + '/api/loggedinuser/me';
+        var loggedInUserApi = gwUrl + '/oauth/token';
 
         // This method makes the REST call and the response is parsed by
         // Angular.js by default to convert to JSON. If the response is
         // successfully parsed then the JSON is available as an 'object'
+        
+        var conf = {
+        		headers : {
+        			"Accept": "application/json",
+        			"withCredentials": "true",
+        			"Access-Control-Allow-Credentials":"true",
+        			"Access-Control-Allow-Origin":"*",
+        			"Content-Type": "application/json"
+        		},
+        		data: "" 
+        	}
+        
         var makeRestCall = function (url) {
-            return $http.get(url)
+            return $http.get(url, conf)
                 .then(function (response) {
 
                     if (typeof response.data === 'object') {
@@ -35,8 +47,7 @@ angular.module('oauthApp')
         return {
         	getMemberList: function () {
                 // Make call to the api to get all users
-        		alert(memberApi)
-                return makeRestCall(memberApi);
+        		return makeRestCall(memberApi);
             },
 
             getAllTaskData: function () {
