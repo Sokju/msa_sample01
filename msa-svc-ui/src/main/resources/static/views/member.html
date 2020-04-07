@@ -9,8 +9,8 @@
                 <th>Email Address</th>
             </tr>
             <tr data-ng-repeat="member in memberDataArray">
-                <td> <a href="" id="{{member.memberName}}" 
-                        data-ng-click="memberController.getUserDataByUserName(member.memberName)">{{member.memberName}}</a></td>
+                <td> <a href="" id="{{member.name}}" 
+                        data-ng-click="memberController.getMemberByName(member.name)">{{member.name}}</a></td>
                 <td><span>{{member.comment}}</span></td>
                 <td><span>{{member.email}}</span></td>
             </tr>
@@ -27,9 +27,9 @@
                 <th>Email Address</th>
             </tr>
             <tr>
-                <td><span>{{member.memberName}}</span></td>
-                <td><span>{{member.comment}}</span></td>
-                <td><span>{{member.lastName}}</span></td>
+                <td><span>{{memberData.name}}</span></td>
+                <td><span>{{memberData.comment}}</span></td>
+                <td><span>{{memberData.email}}</span></td>
             </tr>
         </table>
 	</div>

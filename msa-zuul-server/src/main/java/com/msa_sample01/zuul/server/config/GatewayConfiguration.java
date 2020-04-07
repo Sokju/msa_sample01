@@ -18,6 +18,8 @@ public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
       .antMatchers("/v1/member/**").hasRole("ADMIN")
       .antMatchers("/v1/order/**").hasRole("USER")
       .anyRequest().permitAll()	
-      ;    
+      ;
+      
+//      http.cors();
     }
 }

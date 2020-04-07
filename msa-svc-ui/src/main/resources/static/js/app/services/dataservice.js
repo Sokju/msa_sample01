@@ -18,10 +18,7 @@ angular.module('oauthApp')
         
         var conf = {
         		headers : {
-        			"Accept": "application/json",
-        			"withCredentials": "true",
-        			"Access-Control-Allow-Credentials":"true",
-        			"Access-Control-Allow-Origin":"*",
+        			"Authorization": "Bearer b74a014b-9dd4-4a90-a50e-fdccedb839ca",
         			"Content-Type": "application/json"
         		},
         		data: "" 
@@ -57,7 +54,7 @@ angular.module('oauthApp')
 
             getMemberByName: function (memberName) {
                 // Make call to the api to get user details by user name
-                return makeRestCall(memeberApi + '/' + memeberName);
+                return makeRestCall(memberApi + '/' + memberName);
             },
 
             getTaskDataByTaskId: function (orderId) {
