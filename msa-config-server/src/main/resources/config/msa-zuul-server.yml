@@ -14,13 +14,17 @@ spring:
       max-file-size: 128MB
       max-request-size: 128MB     
     
-#oauth2 authorization server
 security:
   oauth2:
     resource:
       userInfoUri: http://msa-auth-server:9080/user
+      jwt:
+        key-value: 123
     client:
       accessTokenUri: http://msa-auth-server:9080/oauth/token
+      userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
+      clientId: testoauth2
+      clientSecret: testoauth2      
           
 #Eureka Client   
 eureka:
