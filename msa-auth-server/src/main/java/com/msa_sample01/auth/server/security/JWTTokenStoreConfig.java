@@ -2,6 +2,7 @@ package com.msa_sample01.auth.server.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import com.msa_sample01.auth.server.config.ServiceConfig;
 
+@Configuration
 public class JWTTokenStoreConfig {
 	
 	@Autowired

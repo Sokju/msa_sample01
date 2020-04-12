@@ -55,6 +55,12 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-auth-server
       stripPrefix: false  
+    msa-svc-member2:               #routing id
+      path: /v1/member2/**         #zuul context root
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: msa-svc-member   #spring application name
+      stripPrefix: false  
+      
 
 # 타임아웃 설정   
   host:

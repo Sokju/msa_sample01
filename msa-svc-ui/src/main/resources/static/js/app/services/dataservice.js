@@ -18,7 +18,7 @@ angular.module('oauthApp')
         
         var conf = {
         		headers : {
-        			"Authorization": "Bearer fcdcb632-22dc-4322-aa67-13eeda6c4f42",
+        			"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdhbml6YXRpb25JZCI6InNhbXBsZTAxIiwidXNlcl9uYW1lIjoiamFtZXMiLCJzY29wZSI6WyJ3cml0ZSJdLCJleHAiOjE1ODY2ODQ4MDcsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiXSwianRpIjoiYjgzNGYzMWYtYzUxMy00OWI1LWE1MjctZTBmYmRiNjY3MmM0IiwiY2xpZW50X2lkIjoidGVzdG9hdXRoMiJ9.5f8qdW9ApKGS5z0c3LeJmqDONl5TNW13vAS79KWhI4M",
         			"Content-Type": "application/json"
         		},
         		data: "" 
