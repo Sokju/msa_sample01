@@ -25,3 +25,4 @@ eureka:
     serviceUrl:
       defaultZone: http://msa-eureka-server:8761/eureka/
 
+signing.key: "345345fsdgsf5345"

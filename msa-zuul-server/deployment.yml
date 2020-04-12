@@ -26,7 +26,7 @@ spec:
           httpGet:                #probe type : exec(bash실행으로 체크 : ex 파일 유무체크), tcpSocket(TCP 특정포트 연결체크), httpGet(HTTP Get Request 점검)
             path: /actuator/health
             port: 9090            
-          initialDelaySeconds: 40 #컨테이너 생성 후 probe 초기화하기 전 대기 시간(초)
+          initialDelaySeconds: 60 #컨테이너 생성 후 probe 초기화하기 전 대기 시간(초)
           periodSeconds: 10       #probe 실행 주기(Default : 10초, 최소 1초)
           timeoutSeconds: 3       #probe Timeout 대기 시간(Default : 1초, 최소 1초)
           failureThreshold: 3     #실패 판단까지의 시도 회수(Default : 3회)

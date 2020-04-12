@@ -20,6 +20,5 @@ public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
       .anyRequest().permitAll()	
       ;
       
-//      http.cors();
     }
 }

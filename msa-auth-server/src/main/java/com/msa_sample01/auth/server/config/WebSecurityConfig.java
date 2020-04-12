@@ -28,7 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/actuator/health").permitAll();
+		http.authorizeRequests().antMatchers("/actuator/health").permitAll()
+		.and()
+		.csrf().disable()
+		.formLogin().and()
+        .httpBasic();
 	}
     
     
@@ -39,9 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	
     	auth.inMemoryAuthentication()
 	    	.passwordEncoder(encoder)
-	        .withUser("john").password(encoder.encode("john1")).roles("USER")
+	        .withUser("john").password(encoder.encode("password")).roles("USER")
 	        .and()
-	        .withUser("james").password(encoder.encode("james1")).roles("USER", "ADMIN");
+	        .withUser("james").password(encoder.encode("password")).roles("USER", "ADMIN");
     }
 
 }
