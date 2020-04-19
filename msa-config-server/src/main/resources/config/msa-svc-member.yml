@@ -20,11 +20,10 @@ spring:
 
   datasource:
     #initialization-mode: always
-    mylab01:
-      driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
-      username: mylab01
-      password: abcd1234
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
+    username: mylab01
+    password: abcd1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
