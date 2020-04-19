@@ -65,6 +65,7 @@ public class LoginUser implements UserDetails {
 		this.username =  user.getEmail();
 		this.password = user.getPassword();
 		this.userType = user.getUserType();		
+		
 	}
 	
 	@Override

@@ -15,10 +15,10 @@ INSERT INTO oauth_client_details
 VALUES
 (
     'testoauth2',
-    'testoauth2',
+    '$2a$10$8h4RMzia4yhN5Kr/gtPoF.KhCYXr49hItBVnFD66YwuKBqq0m8vcG',
     null, 
     'read,write', 
-    'authorization_code, password, implicit, refresh_token',
+    'authorization_code,password,implicit,refresh_token',
     null,
     'ROLE_YOUR_CLIENT',
     36000,

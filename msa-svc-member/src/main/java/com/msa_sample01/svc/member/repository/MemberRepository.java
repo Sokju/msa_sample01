@@ -10,7 +10,7 @@ import com.msa_sample01.svc.member.domain.Member;
 @Repository
 public interface MemberRepository extends CrudRepository<Member, String> {
 
-	Member findByName(String memeberName);
+	Member findByEmail(String email);
 	
 	List<Member> findAll();
 

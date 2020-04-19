@@ -1,18 +1,15 @@
 package com.msa_sample01.auth.server.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import com.msa_sample01.auth.server.domain.LoginUser;
 import com.msa_sample01.auth.server.domain.Member;
@@ -22,6 +19,9 @@ import com.msa_sample01.auth.server.repository.MemberRepository;
 @Service
 public class MemberService implements UserDetailsService {
   
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	
 	private MemberRepository repository;
 
 //    public void joinUser(Member memberDto) {
@@ -39,9 +39,15 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         
     	Member user = repository.findByEmail(userEmail);
+    	
 		if (user == null) {
+			log.debug("Member is null");
 			throw new UsernameNotFoundException("UsernameNotFound [" + userEmail + "]");
 		}
+		
+    	log.debug(user.getEmail());
+    	log.debug(user.getPassword());
+
 		
 		LoginUser loginUser = createUser(user);	
 		return loginUser;
@@ -67,5 +73,10 @@ public class MemberService implements UserDetailsService {
 		BCryptPasswordEncoder bcr = new BCryptPasswordEncoder();
 		String result = bcr.encode("abcd1234");  
 		System.out.println("Encrypted Password === " + result);
+		
+		
+		result	= PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("testoauth2");
+		System.out.println("Encrypted Password === " + result);
+		
 	}
 }

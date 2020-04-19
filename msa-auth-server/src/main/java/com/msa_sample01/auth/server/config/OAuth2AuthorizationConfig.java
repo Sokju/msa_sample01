@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -21,6 +22,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import com.msa_sample01.auth.server.service.MemberService;
 
 @Configuration
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
@@ -105,6 +108,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 //    }
 */    
 	
+    private final PasswordEncoder passwordEncoder;
+    private final DataSource dataSource;
+    private final MemberService userDetailService;
+    
 	@Value("${resouce.id:spring-boot-application}")
 	private String resourceId;
 	
@@ -116,11 +123,11 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	
     @Bean
     public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 	
 	@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
+	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "passtwo".toCharArray())
 				.getKeyPair("auth", "passone".toCharArray());
@@ -139,7 +146,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).accessTokenConverter(accessTokenConverter());
+		super.configure(endpoints);
+        endpoints.accessTokenConverter(jwtAccessTokenConverter()).userDetailsService(userDetailService);
+        
+		//endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter());
 	}
 	
 	@Bean
@@ -154,7 +164,9 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		
-		clients.withClientDetails(clientDetailsService);
+		//clients.withClientDetails(clientDetailsService);
+		clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
+		
 	}
 	
 

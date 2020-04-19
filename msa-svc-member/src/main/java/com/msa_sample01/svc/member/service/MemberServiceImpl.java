@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setName(memberName);
 		orderServiceClient.order(member.getName());
 		
-		return repository.findByName(memberName);
+		return repository.findByEmail(memberName);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void createMember(Member member) {
 
-		Member existing = repository.findByName(member.getName());
+		Member existing = repository.findByEmail(member.getName());
 		Assert.isNull(existing, "memeber already exists: " + member.getName());
 
 		repository.save(member);
@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateMember(Member member) {
 
-		Member existing = repository.findByName(member.getName());
+		Member existing = repository.findByEmail(member.getName());
 		Assert.notNull(existing, "can't find member with name " + member.getName());
 
 		repository.save(member);
@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(String memberName) {
 
-		Member existing = repository.findByName(memberName);
+		Member existing = repository.findByEmail(memberName);
 		Assert.notNull(existing, "can't find member with name " + memberName);
 
 		repository.deleteById(memberName);

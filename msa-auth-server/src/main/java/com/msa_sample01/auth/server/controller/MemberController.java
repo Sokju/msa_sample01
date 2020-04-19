@@ -1,23 +1,23 @@
 package com.msa_sample01.auth.server.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.msa_sample01.auth.server.domain.Member;
-import com.msa_sample01.auth.server.service.MemberService;
-
-//@RestController
+@RestController
 public class MemberController {
 
-
-//	@RequestMapping(value = { "/user" }, produces = "application/json")
-//	public Map<String, Object> user(OAuth2Authentication user) {
-//		Map<String, Object> userInfo = new HashMap<>();
-//		userInfo.put("user", user.getUserAuthentication().getPrincipal());
-//		userInfo.put("authorities", AuthorityUtils.authorityListToSet(user.getUserAuthentication().getAuthorities()));
-//		return userInfo;
-//	}
+	@RequestMapping(value = { "/user" }, produces = "application/json")
+	public Map<String, Object> user(OAuth2Authentication user) {
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("user", user.getUserAuthentication().getPrincipal());
+		userInfo.put("authorities", AuthorityUtils.authorityListToSet(user.getUserAuthentication().getAuthorities()));
+		return userInfo;
+	}
 	
 //	private MemberService memberService;
 //

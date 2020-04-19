@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 public class Member {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(length = 50, nullable = false, unique = true)
@@ -95,6 +95,7 @@ public class Member {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
 	
 	
 }
