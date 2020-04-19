@@ -19,7 +19,7 @@ spring:
 #      port: 27017
 
   datasource:
-    #initialization-mode: always
+    initialization-mode: always #Schema.sql 실행을 위해 설정
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
     username: mylab01
