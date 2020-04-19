@@ -10,14 +10,27 @@ spring:
   zipkin:
     base-url: http://msa-zipkin-server:9411 #ZipKin Server      
 
-  data:
-    mongodb:
-      host: mongodb-standalone-0.mongodb
-      username: user
-      password: password
-      database: sample01
-      port: 27017
-      
+#  data:
+#    mongodb:
+#      host: mongodb-standalone-0.mongodb
+#      username: user
+#      password: password
+#      database: sample01
+#      port: 27017
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
+    username: mylab01
+    password: abcd1234
+  jpa:
+    open-in-view: false
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      format_sql: true
+      ddl-auto: create-drop
+            
 #Eureka Client   
 eureka:
   instance:

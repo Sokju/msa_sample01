@@ -9,14 +9,24 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.msa_sample01.auth.server.service.MemberService;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+//	private MemberService memberService;
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+    
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -31,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
+    	web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
     }
     
     @Override
@@ -51,12 +61,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	http.csrf().disable();
     	
 		//http.httpBasic();
+    	
+//    	http.authorizeRequests()
+//        // 페이지 권한 설정
+//	        .antMatchers("/admin/**").hasRole("ADMIN")
+//	        .antMatchers("/user/myinfo").hasRole("MEMBER")
+//	        .antMatchers("/**").permitAll()
+//	    .and() // 로그인 설정
+//	        .formLogin()
+//	        .loginPage("/user/login")
+//	        .defaultSuccessUrl("/user/login/result")
+//	        .permitAll()
+//	    .and() // 로그아웃 설정
+//	        .logout()
+//	        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+//	        .logoutSuccessUrl("/user/logout/result")
+//	        .invalidateHttpSession(true)
+//	    .and()
+//	        // 403 예외처리 핸들링
+//	        .exceptionHandling().accessDeniedPage("/user/denied");
 	}
     
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+    	
+    	
+//    	auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+    	
     	PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     	
     	auth.inMemoryAuthentication()

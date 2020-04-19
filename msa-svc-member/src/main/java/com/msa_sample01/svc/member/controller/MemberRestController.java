@@ -81,7 +81,7 @@ public class MemberRestController {
 		
 		log.debug("############ fallbackMemberByName : " + memberName);
 		
-		Member member = new Member();
+		Member member = new Member("","","");
 		member.setName(memberName);
 		member.setComment("fallbackMemberByName");
 		return member;

@@ -1,18 +1,34 @@
 package com.msa_sample01.svc.member.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 
-@Document(collection = "members")
-public class Member {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.springframework.data.annotation.Id;
+
+//@Document(collection = "members")
+@Entity
+@Table(name="members")
+public class Member implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
+	private String email;
+	
 	private String name;
 
 	private String comment;
 	
-	private String email;
-	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -28,23 +44,15 @@ public class Member {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
+			
+	public Member(String email, String name, String comment) {
 		this.email = email;
-	}
-	
-	public Member() {
-		super();
-	}
-	
-	public Member(String name, String comment, String email) {
-		super();
 		this.name = name;
 		this.comment = comment;
-		this.email = email;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Members [email=%s, name=%s, comment=%s", email, name, comment);
 	}
 }

@@ -24,6 +24,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private UserDetailsService userDetailsService;
+    //private MemberService userDetailsService;
 
     @Autowired
     private TokenStore tokenStore;
@@ -51,12 +52,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .userDetailsService(userDetailsService);
     }
 
-    
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    @Autowired
-//    private UserDetailsService userDetailsService;
+
 //
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -90,7 +86,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		        .accessTokenValiditySeconds(3600);
         // @formatter:on
     }
-//
+
 //    @Override
 //    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 //        endpoints
