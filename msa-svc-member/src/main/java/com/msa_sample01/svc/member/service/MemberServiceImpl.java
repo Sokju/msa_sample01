@@ -1,6 +1,5 @@
 package com.msa_sample01.svc.member.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,13 +23,14 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository repository;
 	
-	private List<Member> users = Arrays.asList(new Member("james", "tester", "james@crossent.com"),
-			new Member("john", "admin", "john@crossent.com"),
-			new Member("harry", "developer", "harray@crossent.com"));
+//	private List<Member> users = Arrays.asList(new Member("james", "tester", "james@crossent.com"),
+//			new Member("john", "admin", "john@crossent.com"),
+//			new Member("harry", "developer", "harray@crossent.com"));
 
 	@Override
 	public List<Member> getMemberList() {
-		return users;
+		
+		return repository.findAll();
 	}
 	
 	
@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 	public Member findByName(String memberName) {
 		Assert.hasLength(memberName, "memberName is null");
 		
-		Member member = new Member("","","");
+		Member member = new Member();
 		
 		log.debug("Member Name : {} ", memberName);
 		
