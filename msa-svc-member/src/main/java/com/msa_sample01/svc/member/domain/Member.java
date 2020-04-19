@@ -9,10 +9,9 @@ import org.springframework.data.annotation.Id;
 
 //@Document(collection = "members")
 @Entity
-@Table(name="members")
-public class Member implements Serializable {
+@Table(name="mylab01.members")
+public class Member {
 
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String email;
