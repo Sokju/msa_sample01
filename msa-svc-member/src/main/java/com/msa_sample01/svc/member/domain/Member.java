@@ -1,11 +1,9 @@
 package com.msa_sample01.svc.member.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
 
 //@Document(collection = "members")
 @Entity
