@@ -22,7 +22,7 @@ spring:
     #initialization-mode: always
     mylab01:
       driver-class-name: org.mariadb.jdbc.Driver
-      jdbc-url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
+      url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
       username: mylab01
       password: abcd1234
   jpa:
