@@ -19,6 +19,7 @@ spring:
 #      port: 27017
 
   datasource:
+    #initialization-mode: always
     mylab01:
       driver-class-name: org.mariadb.jdbc.Driver
       jdbc-url: jdbc:mariadb://mylab-mariadb:3306/mylab01?characterEncoding=UTF-8&serverTimezone=UTC
@@ -31,7 +32,7 @@ spring:
     generate-ddl: true  #최초 데이터베이스 스키마를 자동으로 생성(개발환경에서 주로 사용)
     hibernate:
       format_sql: true  #쿼리문을 가독성 있게 출력
-      ddl-auto: create-drop
+      ddl-auto: none    #명시적인 Schema.sql 등을 사용시에는 turn-off 설정
 
 #logging:
 #  level:
