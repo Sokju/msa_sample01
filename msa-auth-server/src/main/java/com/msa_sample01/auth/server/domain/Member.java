@@ -1,33 +1,49 @@
 package com.msa_sample01.auth.server.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
-@Document(collection = "members")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="members")
 public class Member {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column(length = 50, nullable = false, unique = true)
 	private String email;
 	
-	private String name;
-
+	@Column(length = 50, nullable = false)
 	private String password;
 	
+	@Column(length = 50, nullable = false)
+	private String name;
 	
-	public String getName() {
-		return name;
+	@Column(length = 100, nullable = false)
+	private String comment;
+	
+	@Column(length = 1, nullable = false)
+	private String userType;
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date regDate = new Date();
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -38,14 +54,46 @@ public class Member {
 		this.email = email;
 	}
 
-	public Member() {
-		super();
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	
-	public Member(String name, String password, String email) {
-		super();
-		this.name = name;
-		this.password = password;
-		this.email = email;
-	}
+	
+	
 }

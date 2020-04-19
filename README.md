@@ -1,4 +1,4 @@
-MSA 샘플 프로그램 (Spring Cloude + Netflix OSS)
+MSA 샘플 프로그램 (Spring Cloud + Netflix OSS)
 
 
 
