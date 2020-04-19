@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 //@Document(collection = "members")
 @Entity
-@Table(name="mylab01.members")
+@Table(name="members")
 public class Member {
 
 

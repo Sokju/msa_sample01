@@ -1,25 +1,17 @@
 server:
-  port: 8888
+  port: 9080
   
 spring:
   application:
-    name: msa-config-server
-
-#git repository trigger config      
-  cloud:
-    config:
-      server:
-        git: 
-          uri: "https://github.com/Sokju/msa_sample01"
-          search-paths: platform_config
-
-#  cloud:
-#    config:
-#      server:
-#        native:
-#          search-locations: classpath:/config
-#  profiles:
-#     active: native
+    name: msa-auth-server
+    
+  data:
+    mongodb:
+      host: mongodb-standalone-0.mongodb
+      username: user
+      password: password
+      database: sample01
+      port: 27017
 
 #Eureka Client   
 eureka:
@@ -31,4 +23,13 @@ eureka:
     region: default
     registryFetchIntervalSeconds: 5
     serviceUrl:
-      defaultZone: http://msa-eureka-server:8761/eureka/      
+      defaultZone: http://msa-eureka-server:8761/eureka/
+
+signing.key: "345345fsdgsf5345"
+
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123
