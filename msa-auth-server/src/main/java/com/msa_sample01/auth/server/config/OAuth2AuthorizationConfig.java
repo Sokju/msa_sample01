@@ -1,7 +1,5 @@
 package com.msa_sample01.auth.server.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,11 +8,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 @Configuration
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
@@ -25,47 +18,12 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private DefaultTokenServices tokenServices;
-
-    @Autowired
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired
-    private TokenEnhancer jwtTokenEnhancer;
-
-
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-
-        endpoints.tokenStore(tokenStore)                             //JWT
-                .accessTokenConverter(jwtAccessTokenConverter)       //JWT
-                .tokenEnhancer(tokenEnhancerChain)                   //JWT
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
-    }
-
-    
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    @Autowired
-//    private UserDetailsService userDetailsService;
-//
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         // TODO persist clients details
 
     	/*
-    	 * ClientDetailServiceconfigurer 클라스는 inMemory 타입과 JDBC 저장소를 지원
-    	 * withClient/secret 메소드 호출은 애클리케이션이 OAuth2 액세스 토큰을 받기 위해 제시할 시크릿과 애플리케이션 이름을 제공
     	 * redirectUri : 인증 완료 후 이동할 클라이언트 웹 페이지 주소로 code 값을 실어 전달
     	 * authorizedGrantTypes	:	
     	 * 	1) authorization_code :	Service Provider가 제공하는 인증 화면에 로그인하고
@@ -90,16 +48,16 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		        .accessTokenValiditySeconds(3600);
         // @formatter:on
     }
-//
-//    @Override
-//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        endpoints
-//                .authenticationManager(authenticationManager)		
-//                .userDetailsService(userDetailsService);
-//        
-//        //Default Endpoint Path : 	authenticationManager : /oauth/token
-//        //							userDetailsService	  : /user
-//    }
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints
+                .authenticationManager(authenticationManager)		
+                .userDetailsService(userDetailsService);
+        
+        //Default Endpoint Path : 	authenticationManager : /oauth/token
+        //							userDetailsService	  : /user
+    }
     
 
 }
