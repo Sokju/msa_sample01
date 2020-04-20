@@ -23,11 +23,10 @@ public class InspectHeaderFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-//
-//        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-//        log.debug("I AM HITTING THE AUTH SERVER: " + httpServletRequest.getHeader("Authorization"));
 
-      //  filterChain.doFilter(httpServletRequest, servletResponse);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        log.debug("I AM HITTING THE AUTH SERVER: " + httpServletRequest.getHeader("Authorization"));
+        filterChain.doFilter(httpServletRequest, servletResponse);
     }
 
     @Override
