@@ -40,3 +40,4 @@ security:
     resource:
       jwt:
         key-value: 123
+        #key-uri: http://localhost:9093/oauth/token_key

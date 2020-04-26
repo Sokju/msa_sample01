@@ -59,6 +59,11 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-auth-server
       stripPrefix: false  
+    auth-user:
+      path: /user/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: msa-auth-server
+      stripPrefix: false        
     msa-svc-member2:               #routing id
       path: /v1/member2/**         #zuul context root
       sensitiveHeaders: Cookie,Set-Cookie

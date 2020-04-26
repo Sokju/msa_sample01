@@ -13,6 +13,7 @@ public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
     public void configure(final HttpSecurity http) throws Exception {
       http
       .authorizeRequests()
+      .antMatchers("/oauth/**").permitAll()
       .antMatchers("/v1/member/api-docs/**").permitAll()
       .antMatchers("/v1/order/api-docs/**").permitAll()
       .antMatchers("/v1/member/**").hasRole("ADMIN")
