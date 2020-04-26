@@ -25,6 +25,12 @@ security:
       userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
       clientId: testoauth2
       clientSecret: testoauth2      
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "hystrix.stream,health,refresh"       
           
 #Eureka Client   
 eureka:
@@ -43,30 +49,26 @@ zuul:
   ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
   #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
   ignore-security-headers: false  #spring security를 쓰고 시큐리티헤더를 통과
+  sensitiveHeaders: Cookie,Set-Cookie
   routes:
     msa-svc-member:               #routing id
       path: /v1/member/**         #zuul context root
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
     msa-svc-order: 
       path: /v1/order/**  
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-order   
       stripPrefix: false  
     auth-server:
       path: /oauth/**
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-auth-server
       stripPrefix: false  
     auth-user:
       path: /user/**
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-auth-server
       stripPrefix: false        
     msa-svc-member2:               #routing id
       path: /v1/member2/**         #zuul context root
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
       
