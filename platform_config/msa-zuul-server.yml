@@ -18,13 +18,13 @@ security:
   oauth2:
     resource:
       userInfoUri: http://msa-auth-server:9080/user
-      jwt:
-        key-value: 123
+#      jwt:
+#        key-value: 123
     client:
       accessTokenUri: http://msa-auth-server:9080/oauth/token
       userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
-      clientId: testoauth2
-      clientSecret: testoauth2      
+#      clientId: testoauth2
+#      clientSecret: testoauth2      
           
 #Eureka Client   
 eureka:
@@ -82,3 +82,8 @@ ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
    ReadTimeout: 2000       # Connection 맺은 후 response 받기 까지 delay time
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   
