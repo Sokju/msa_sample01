@@ -19,7 +19,16 @@ security:
     resource:
       userInfoUri: http://msa-auth-server:9080/user
       jwt:
-        key-value: 123
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt4w9qdhOB0+J2zhUG6AE
+          uyr1vEUHSATWwKpwQ5xc0+7rPCLXibjbCAO+AWbA/JHZ29XTIerdufDJEdux+JJc
+          phljNXWz/FGuMSdU9EzsBVimMbthYwVrlmj1iaSsNfR4Vl1qA6WqACmjsjEoPEcE
+          75AefArOF0LLKJ3jsDs/MJ4t+bd2F3so3IWE1FtOhBGUWWfgnIXpfpj1i+FCEcQt
+          41R6YH8hvyJHRh4pW3gcz5uIPvZT3l/4MRGr9LNDpoq2nIxvynnLl/KsTgnm+6Lm
+          V1G4DsdbPCxSR4ywKkiSp+5z69pF4DFbNqesUNpJtwqXTb2QEkiQSnx9UaDkZT23
+          SwIDAQAB
+          -----END PUBLIC KEY-----        
     client:
       accessTokenUri: http://msa-auth-server:9080/oauth/token
       userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
