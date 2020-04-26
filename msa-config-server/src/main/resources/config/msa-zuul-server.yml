@@ -18,13 +18,9 @@ security:
   oauth2:
     resource:
       userInfoUri: http://msa-auth-server:9080/user
-      jwt:
-        key-value: 123
     client:
       accessTokenUri: http://msa-auth-server:9080/oauth/token
       userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
-      clientId: testoauth2
-      clientSecret: testoauth2      
           
 #Eureka Client   
 eureka:
