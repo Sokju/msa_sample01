@@ -28,12 +28,18 @@ security:
           41R6YH8hvyJHRh4pW3gcz5uIPvZT3l/4MRGr9LNDpoq2nIxvynnLl/KsTgnm+6Lm
           V1G4DsdbPCxSR4ywKkiSp+5z69pF4DFbNqesUNpJtwqXTb2QEkiQSnx9UaDkZT23
           SwIDAQAB
-          -----END PUBLIC KEY-----        
+          -----END PUBLIC KEY-----
     client:
       accessTokenUri: http://msa-auth-server:9080/oauth/token
       userAuthorizationUri: http://msa-auth-server:9080/oauth/authorize
-#      clientId: testoauth2
-#      clientSecret: testoauth2      
+      clientId: testoauth2
+      clientSecret: testoauth2      
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "hystrix.stream,health,refresh"       
           
 #Eureka Client   
 eureka:
@@ -52,25 +58,26 @@ zuul:
   ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
   #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
   ignore-security-headers: false  #spring security를 쓰고 시큐리티헤더를 통과
+  sensitiveHeaders: Cookie,Set-Cookie
   routes:
     msa-svc-member:               #routing id
       path: /v1/member/**         #zuul context root
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
     msa-svc-order: 
       path: /v1/order/**  
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-order   
       stripPrefix: false  
     auth-server:
       path: /oauth/**
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-auth-server
       stripPrefix: false  
+    auth-user:
+      path: /user/**
+      serviceId: msa-auth-server
+      stripPrefix: false        
     msa-svc-member2:               #routing id
       path: /v1/member2/**         #zuul context root
-      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
       
@@ -91,8 +98,3 @@ ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
    ReadTimeout: 2000       # Connection 맺은 후 response 받기 까지 delay time
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"   
