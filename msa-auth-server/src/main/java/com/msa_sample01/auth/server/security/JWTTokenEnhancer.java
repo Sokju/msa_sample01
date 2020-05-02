@@ -9,6 +9,9 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
+/*
+ * JWT Token 에 추가 정보 설정 예시
+ */
 public class JWTTokenEnhancer implements TokenEnhancer {
     
 //	@Autowired

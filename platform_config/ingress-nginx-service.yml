@@ -13,6 +13,10 @@ spec:
       port: 443
       targetPort: 443
       protocol: TCP
+    - name: proxie-tcp-mysql
+      port: 3306
+      targetPort: 3306
+      protocol: TCP
     selector: 
         app.kubernetes.io/name: ingress-nginx 
         app.kubernetes.io/part-of: ingress-nginx 

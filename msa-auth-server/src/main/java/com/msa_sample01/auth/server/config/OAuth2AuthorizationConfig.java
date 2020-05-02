@@ -5,29 +5,93 @@ import java.security.KeyPair;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-
-import com.msa_sample01.auth.server.service.MemberService;
 
 @Configuration
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
+	@Autowired
+	private ClientDetailsService clientDetailsService;
+	
+	
+	@Autowired
+    private AuthenticationManager authenticationManager;
+	
+//	@Autowired
+//    private MemberService userDetailsService;
+//	
+//	@Autowired
+//    private TokenEnhancer jwtTokenEnhancer;
+    
+//	@Bean
+//    public TokenStore tokenStore() {
+//        return new JwtTokenStore(jwtAccessTokenConverter());
+//    }
+
+	/*
+	 * JWT 토큰 인증키 설정
+	 */
+	@Bean
+	public JwtAccessTokenConverter jwtAccessTokenConverter() {
+		
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "passtwo".toCharArray())
+				.getKeyPair("auth", "passone".toCharArray());
+		converter.setKeyPair(keyPair);		
+		return converter;
+		
+//		파일시스템 사용 예시
+//		KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new FileSystemResource("src/main/resources/oauth2jwt.jks"), "oauth2jwtpass".toCharArray());
+//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+//        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("oauth2jwt"));
+//        return converter;
+	}
+	
+	/*
+	 * 인증과정 Endpoint 설정
+	 */
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		
+		super.configure(endpoints);
+		endpoints.accessTokenConverter(jwtAccessTokenConverter()).authenticationManager(authenticationManager);
+
+		/*
+		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
+
+        endpoints.tokenStore(tokenStore)                             //JWT
+                .accessTokenConverter(jwtAccessTokenConverter)       //JWT
+                .tokenEnhancer(tokenEnhancerChain)                   //JWT
+                .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
+        */
+	}
+	
+	@Bean
+	@Primary
+	public JdbcClientDetailsService JdbcClientDetailsService(DataSource dataSource) {
+		return new JdbcClientDetailsService(dataSource);
+	}
+	
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		
+		clients.withClientDetails(clientDetailsService);
+		//clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
+	}
+	
 	
 	/*
     @Autowired
@@ -47,8 +111,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private TokenEnhancer jwtTokenEnhancer;
-
-
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -106,8 +168,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 //        //Default Endpoint Path : 	authenticationManager : /oauth/token
 //        //							userDetailsService	  : /user
 //    }
-*/    
-	
+
     private final PasswordEncoder passwordEncoder;
     private final DataSource dataSource;
     private final MemberService userDetailService;
@@ -169,5 +230,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		
 	}
 	
+	*/
 
 }

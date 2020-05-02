@@ -13,20 +13,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.msa_sample01.auth.server.service.MemberService;
 
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private MemberService userDetailService;
 
+	/**
+	 * Spring 버전 업 이후 필수 설정
+	 * @return
+	 */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 	
-	@Autowired
-	private MemberService userDetailService;
-	
+    /**
+     * Custom User 인증 서비스 설정
+     */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	 auth.authenticationProvider(authenticationProvider());
@@ -44,6 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
     
+    /**
+     * Authentication Manager Bean 등록
+     */
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

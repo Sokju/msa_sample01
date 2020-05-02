@@ -21,7 +21,6 @@ public class MemberService implements UserDetailsService {
   
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	
 	private MemberRepository repository;
 
 //    public void joinUser(Member memberDto) {
@@ -73,7 +72,6 @@ public class MemberService implements UserDetailsService {
 		BCryptPasswordEncoder bcr = new BCryptPasswordEncoder();
 		String result = bcr.encode("abcd1234");  
 		System.out.println("Encrypted Password === " + result);
-		
 		
 		result	= PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("testoauth2");
 		System.out.println("Encrypted Password === " + result);
