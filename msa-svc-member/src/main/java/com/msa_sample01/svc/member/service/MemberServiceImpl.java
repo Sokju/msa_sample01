@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -48,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setName(memberName);
 		orderServiceClient.order(member.getName());
 		
-		return repository.findByEmail(memberName);
+		return repository.findByName(memberName);
 	}
 
 	/**
@@ -57,9 +58,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void createMember(Member member) {
 
-		Member existing = repository.findByEmail(member.getName());
+		Member existing = repository.findByName(member.getName());
 		Assert.isNull(existing, "memeber already exists: " + member.getName());
 
+		member.setPassword(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(member.getPassword()));
+		
 		repository.save(member);
 
 		log.debug("new member has been created: " + member.getName());
@@ -71,12 +74,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateMember(Member member) {
 
-		Member existing = repository.findByEmail(member.getName());
+		Member existing = repository.findByEmail(member.getEmail());
 		Assert.notNull(existing, "can't find member with name " + member.getName());
 
-		repository.save(member);
+		existing.setComment(member.getComment());
+		repository.save(existing);
 
-		log.debug("Memeber {} changes has been saved", member.getName());
+		log.debug("Member {} changes has been saved", member.getName());
 
 	}
 	
@@ -84,14 +88,14 @@ public class MemberServiceImpl implements MemberService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteMember(String memberName) {
+	public void deleteMember(String email) {
 
-		Member existing = repository.findByEmail(memberName);
-		Assert.notNull(existing, "can't find member with name " + memberName);
+		Member existing = repository.findByEmail(email);
+		Assert.notNull(existing, "can't find member with email " + email);
 
-		repository.deleteById(memberName);
+		repository.deleteById(existing.getId());
 
-		log.debug("Memeber {} has been deleted", memberName);
+		log.debug("Member {} has been deleted", email);
 
 	}
 }

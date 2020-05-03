@@ -11,17 +11,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class LoginUser implements UserDetails {
 	
 	private static final long serialVersionUID = 6396079419309274853L;
-	private Long id;
+	private Integer id;
 	private String username;
 	private String password;
 	private String userType;
 	private List<String> roles;
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

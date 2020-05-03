@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,8 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
+	@Autowired
 	private MemberRepository repository;
-
+	
 //    public void joinUser(Member memberDto) {
 //
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -39,30 +41,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         
-    	log.debug("=HSJ===>loadUserByUsername");
-    	
-    	Member user = repository.findByEmail(userEmail);
+    	Member user = repository.findByUsername(userEmail);
     	
 		if (user == null) {
 			log.debug("Member is null");
 			throw new UsernameNotFoundException("UsernameNotFound [" + userEmail + "]");
 		}
 		
-		log.debug("=============================================================");
-    	log.debug(user.getEmail());
-    	log.debug(user.getPassword());
-    	log.debug("=============================================================");
-
-		
 		LoginUser loginUser = createUser(user);	
 		return loginUser;
+	}
 		
-    }
+    
     
     private LoginUser createUser(Member user) {
 		
-    	log.debug("=HSJ===>createUser");
-    	
     	LoginUser loginUser = new LoginUser(user);
 		if (loginUser.getUserType().equals("1")) {
 			loginUser.setRoles(Arrays.asList("ROLE_ADMIN"));
@@ -78,10 +71,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
    
 	public static void main(String[] args) {
 		BCryptPasswordEncoder bcr = new BCryptPasswordEncoder();
-		String result = bcr.encode("abcd1234");  
+		String result = bcr.encode("testoauth2");  
+		System.out.println("Encrypted Password === " + result);
+		result = bcr.encode("abcd1234");  
 		System.out.println("Encrypted Password === " + result);
 		
 		result	= PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("testoauth2");
+		System.out.println("Encrypted Password === " + result);
+		
+		result	= PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("abcd1234");
 		System.out.println("Encrypted Password === " + result);
 		
 	}

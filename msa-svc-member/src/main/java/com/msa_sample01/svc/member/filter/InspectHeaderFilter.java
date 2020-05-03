@@ -25,18 +25,18 @@ public class InspectHeaderFilter implements Filter {
             throws IOException, ServletException {
 
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        log.debug("I AM HITTING THE AUTH SERVER: " + httpServletRequest.getHeader("Authorization"));
-        
-        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+//        log.debug("I AM HITTING THE AUTH SERVER: " + httpServletRequest.getHeader("Authorization"));
+//        
+//        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+//
+//        while (headerNames.hasMoreElements()) {
+//            String headerName = headerNames.nextElement();
+//            
+//            log.debug(headerName + " : " + httpServletRequest.getHeader(headerName));
+//        }
 
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            
-            log.debug(headerName + " : " + httpServletRequest.getHeader(headerName));
-        }
-
-        filterChain.doFilter(httpServletRequest, servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

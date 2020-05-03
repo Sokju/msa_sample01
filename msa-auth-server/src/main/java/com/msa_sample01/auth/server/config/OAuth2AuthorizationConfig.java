@@ -1,6 +1,7 @@
 package com.msa_sample01.auth.server.config;
 
 import java.security.KeyPair;
+import java.util.Arrays;
 
 import javax.sql.DataSource;
 
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -86,66 +88,20 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
     	
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter()));
 
         endpoints.tokenStore(tokenStore())                           //JWT
-                .accessTokenConverter(jwtAccessTokenConverter)       //JWT
+                .accessTokenConverter(jwtAccessTokenConverter())     //JWT
                 .tokenEnhancer(tokenEnhancerChain)                   //JWT
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
     }
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		JdbcClientDetailsService jdbcClientDetailsService = new JdbcClientDetailsService(dataSource);
-		clients.withClientDetails(jdbcClientDetailsService);
-		//clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
-	}
-	
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
-    }
-	
-	/*
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-    
-    @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private DefaultTokenServices tokenServices;
-
-    @Autowired
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired
-    private TokenEnhancer jwtTokenEnhancer;
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-
-        endpoints.tokenStore(tokenStore)                             //JWT
-                .accessTokenConverter(jwtAccessTokenConverter)       //JWT
-                .tokenEnhancer(tokenEnhancerChain)                   //JWT
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
-    }
-
-
-//
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
-        // TODO persist clients details
-
-    	//
+		
+		
+		//
     	//ClientDetailServiceconfigurer 클라스는 inMemory 타입과 JDBC 저장소를 지원
     	//withClient/secret 메소드 호출은 애클리케이션이 OAuth2 액세스 토큰을 받기 위해 제시할 시크릿과 애플리케이션 이름을 제공
     	//redirectUri : 인증 완료 후 이동할 클라이언트 웹 페이지 주소로 code 값을 실어 전달
@@ -162,88 +118,26 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		//scopes : 인증 후 얻은 accessToken으로 접근할 수 있는 리소스의 범위, resource서버(api서버)에서는 해당 scope정보로 클라이언트에게 제공할 리소스를 제한하거나 노출
 		//accessTokenValiditySeconds : 발급된 accessToken의 유효시간(초) 
     	//
-    	
-        // @formatter:off
+    	/*
+        @formatter:off
         clients.inMemory()
 		        .withClient("testoauth2")
 		        .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("testoauth2"))
 		        .authorizedGrantTypes("refresh_token", "password", "client_credentials")
 		        .scopes("read", "write")
 		        .accessTokenValiditySeconds(3600);
-        // @formatter:on
-    }
-
-//    @Override
-//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        endpoints
-//                .authenticationManager(authenticationManager)		
-//                .userDetailsService(userDetailsService);
-//        
-//        //Default Endpoint Path : 	authenticationManager : /oauth/token
-//        //							userDetailsService	  : /user
-//    }
-
-    private final PasswordEncoder passwordEncoder;
-    private final DataSource dataSource;
-    private final MemberService userDetailService;
-    
-	@Value("${resouce.id:spring-boot-application}")
-	private String resourceId;
+        @formatter:on
+        */
+		
+		JdbcClientDetailsService jdbcClientDetailsService = new JdbcClientDetailsService(dataSource);
+		clients.withClientDetails(jdbcClientDetailsService);
+		//clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
+	}
 	
-	@Value("${access_token.validity_period:3600}")
-	int accessTokenValiditySeconds = 3600;
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	
-    @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
     }
 	
-	@Bean
-	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "passtwo".toCharArray())
-				.getKeyPair("auth", "passone".toCharArray());
-		converter.setKeyPair(keyPair);		
-		return converter;
-	}
-	
-	@Bean
-	@Primary
-	public DefaultTokenServices tokenService() {
-		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-		defaultTokenServices.setTokenStore(tokenStore());
-		defaultTokenServices.setSupportRefreshToken(true);
-		return defaultTokenServices;
-	}
-
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		super.configure(endpoints);
-        endpoints.accessTokenConverter(jwtAccessTokenConverter()).userDetailsService(userDetailService);
-        
-		//endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter());
-	}
-	
-	@Bean
-	@Primary
-	public JdbcClientDetailsService JdbcClientDetailsService(DataSource dataSource) {
-		return new JdbcClientDetailsService(dataSource);
-	}
-	
-	@Autowired
-	private ClientDetailsService clientDetailsService;
-
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		
-		//clients.withClientDetails(clientDetailsService);
-		clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
-		
-	}
-	
-	*/
 
 }
