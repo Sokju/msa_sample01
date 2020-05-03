@@ -1,14 +1,11 @@
 package com.msa_sample01.auth.server.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -20,8 +17,8 @@ import com.msa_sample01.auth.server.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	@Autowired
-//	private UserDetailsServiceImpl userDetailService;
+	@Autowired
+	private UserDetailsServiceImpl userDetailService;
 
     /**
      * Authentication Manager Bean 등록
@@ -32,36 +29,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	return super.authenticationManagerBean();
     }
     
-//    /**
-//     * 데이터베이스 인증용 Provider
-//     * @return
-//     */
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//    	DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
-//    
-//	/**
-//	 * Spring 버전 업 이후 필수 설정
-//	 * @return
-//	 */
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//    	//new BCryptPasswordEncoder();
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
-//	
-//    /**
-//     * Custom User 인증 서비스 설정
-//     */
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(authenticationProvider());
-//	}
-
+    /**
+     * 데이터베이스 인증용 Provider
+     * @return
+     */
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+    	DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+    
+	/**
+	 * Spring 버전 업 이후 필수 설정
+	 * @return
+	 */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+    	//new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+	
+    /**
+     * Custom User 인증 서비스 설정
+     */
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authenticationProvider());
+	}
 
 /*
     @Override

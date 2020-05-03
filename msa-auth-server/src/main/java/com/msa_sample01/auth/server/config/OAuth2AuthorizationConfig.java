@@ -50,7 +50,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
-    
    
 	/*
 	 * JWT 토큰 인증키 설정
@@ -59,14 +58,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
-        return converter;
-        
-//		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-//		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "passtwo".toCharArray())
-//				.getKeyPair("auth", "passone".toCharArray());
-//		converter.setKeyPair(keyPair);		
-//		return converter;
+		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "passtwo".toCharArray())
+				.getKeyPair("auth", "passone".toCharArray());
+		converter.setKeyPair(keyPair);		
+		return converter;
 		
 //		파일시스템 사용 예시
 //		KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new FileSystemResource("src/main/resources/oauth2jwt.jks"), "oauth2jwtpass".toCharArray());
@@ -90,7 +85,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
     	
-    	/*
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
 
@@ -98,11 +92,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(jwtAccessTokenConverter)       //JWT
                 .tokenEnhancer(tokenEnhancerChain)                   //JWT
                 .authenticationManager(authenticationManager);
-//                .userDetailsService(userDetailsService);
- 		*/
-    	endpoints.tokenStore(tokenStore()).accessTokenConverter(jwtAccessTokenConverter())
-    		.authenticationManager(authenticationManager)
-    		.userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService);
     }
 	
 	@Override

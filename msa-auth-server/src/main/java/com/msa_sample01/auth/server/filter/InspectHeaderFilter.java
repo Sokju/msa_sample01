@@ -27,7 +27,7 @@ public class InspectHeaderFilter implements Filter {
 //        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 //        log.debug("I AM HITTING THE AUTH SERVER: " + httpServletRequest.getHeader("Authorization"));
 
-      //  filterChain.doFilter(httpServletRequest, servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
