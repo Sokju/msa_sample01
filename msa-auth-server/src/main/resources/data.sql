@@ -15,7 +15,7 @@ INSERT INTO oauth_client_details
 VALUES
 (
     'testoauth2',
-    '$2a$10$8h4RMzia4yhN5Kr/gtPoF.KhCYXr49hItBVnFD66YwuKBqq0m8vcG',
+    '{bcrypt}$2a$10$XA5sao22Yb2h7yhhNmv.A.4a5Sj2JhrB3zdMvQ7dFRs9s98dKV032',
     null, 
     'read,write', 
     'authorization_code,password,implicit,refresh_token',
@@ -27,6 +27,6 @@ VALUES
     null
 );
 
-insert into members(email, password, name, comment, user_type, reg_date) values('admin@sample01.com','$2a$10$UQVTvPrDntukWob4IMJUTem/PwHI1mvWZaoIDgxaRGFg7Lxpnvexq', 'james', 'Administrator','1', now());
-insert into members(email, password, name, comment, user_type, reg_date) values('tester@sample01.com','$2a$10$UQVTvPrDntukWob4IMJUTem/PwHI1mvWZaoIDgxaRGFg7Lxpnvexq', 'john', 'Tester','2', now());
-insert into members(email, password, name, comment, user_type, reg_date) values('developer@sample01.com','$2a$10$UQVTvPrDntukWob4IMJUTem/PwHI1mvWZaoIDgxaRGFg7Lxpnvexq', 'harry', 'developer','3', now());
+insert into members(email, password, name, comment, user_type, reg_date) values('admin@sample01.com','{bcrypt}$2a$10$XA5sao22Yb2h7yhhNmv.A.4a5Sj2JhrB3zdMvQ7dFRs9s98dKV032', 'james', 'Administrator','1', now());
+insert into members(email, password, name, comment, user_type, reg_date) values('tester@sample01.com','{bcrypt}$2a$10$XA5sao22Yb2h7yhhNmv.A.4a5Sj2JhrB3zdMvQ7dFRs9s98dKV032', 'john', 'Tester','2', now());
+insert into members(email, password, name, comment, user_type, reg_date) values('developer@sample01.com','{bcrypt}$2a$10$XA5sao22Yb2h7yhhNmv.A.4a5Sj2JhrB3zdMvQ7dFRs9s98dKV032', 'harry', 'developer','3', now());

@@ -36,7 +36,7 @@
     <!-- logger name="com.msa_sample01" level="INFO">
         <appender-ref ref="DAILY_ROLLING_FILE_APPENDER" />
     </logger -->
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="SAMPLE" />
     </root>
 </configuration>

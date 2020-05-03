@@ -2,6 +2,8 @@ package com.msa_sample01.auth.server.service;
 
 import java.util.Arrays;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +17,9 @@ import com.msa_sample01.auth.server.domain.LoginUser;
 import com.msa_sample01.auth.server.domain.Member;
 import com.msa_sample01.auth.server.repository.MemberRepository;
 
-
 @Service
-public class MemberService implements UserDetailsService {
+@Transactional
+public class UserDetailsServiceImpl implements UserDetailsService {
   
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -33,10 +35,12 @@ public class MemberService implements UserDetailsService {
 //
 //		repository.save(memberDto);
 //    }
-
+	
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         
+    	log.debug("=HSJ===>loadUserByUsername");
+    	
     	Member user = repository.findByEmail(userEmail);
     	
 		if (user == null) {
@@ -44,8 +48,10 @@ public class MemberService implements UserDetailsService {
 			throw new UsernameNotFoundException("UsernameNotFound [" + userEmail + "]");
 		}
 		
+		log.debug("=============================================================");
     	log.debug(user.getEmail());
     	log.debug(user.getPassword());
+    	log.debug("=============================================================");
 
 		
 		LoginUser loginUser = createUser(user);	
@@ -55,6 +61,8 @@ public class MemberService implements UserDetailsService {
     
     private LoginUser createUser(Member user) {
 		
+    	log.debug("=HSJ===>createUser");
+    	
     	LoginUser loginUser = new LoginUser(user);
 		if (loginUser.getUserType().equals("1")) {
 			loginUser.setRoles(Arrays.asList("ROLE_ADMIN"));
