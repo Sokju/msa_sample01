@@ -42,3 +42,20 @@ spec:
           successThreshold: 1           
       restartPolicy: Always
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa-svc-member
+  name: msa-svc-member
+spec:
+  ports:
+  - port: 9091
+    protocol: TCP
+    targetPort: 9091
+  selector:
+    run: msa-svc-member
+  type: ClusterIP
+
+

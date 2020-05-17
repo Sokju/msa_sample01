@@ -42,3 +42,37 @@ spec:
           successThreshold: 1          
       restartPolicy: Always
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa-eureka-server
+  name: msa-eureka-server
+spec:
+  ports:
+  - port: 8761
+    protocol: TCP
+    targetPort: 8761
+  selector:
+    run: msa-eureka-server
+  type: ClusterIP
+
+
+
+---
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: msa-eureka-server
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: eureka.msasmp01.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: msa-eureka-server
+          servicePort: 8761

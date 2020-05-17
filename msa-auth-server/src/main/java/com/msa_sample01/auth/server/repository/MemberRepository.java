@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.msa_sample01.auth.server.domain.Member;
 
-//@Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
 	@Query("SELECT DISTINCT u FROM Member u WHERE u.email = :email")

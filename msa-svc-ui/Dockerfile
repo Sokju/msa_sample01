@@ -1,7 +1,12 @@
 #FROM java:8-jre
 FROM openjdk:8-jre
 
-ADD ./target/msa-svc-ui.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/msa-svc-ui.jar"]
+ENV CONFIG_SERVICE_NAME msa-config-server
+ENV PROFILES dev
+ENV JAR_FILE msa-svc-ui.jar
+
+ADD ./target/${JAR_FILE} /app/
+ENTRYPOINT [ "sh", "-c" ]
+CMD ["exec java -Xmx200m -Dspring.profiles.active=${PROFILES} -jar /app/${JAR_FILE}"]
 
 EXPOSE 9093

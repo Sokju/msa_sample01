@@ -30,12 +30,14 @@
         </rollingPolicy>
     </appender>
     
-    <logger name="com.msa_sample01" level="DEBUG"/>
+    <springProfile name="dev">
+        <logger name="com.msa_sample01" level="DEBUG"/>
 
-    <!-- logger name="com.msa_sample01" level="INFO">
-        <appender-ref ref="DAILY_ROLLING_FILE_APPENDER" />
-    </logger -->
-
+	    <!-- logger name="com.msa_sample01" level="INFO">
+	        <appender-ref ref="DAILY_ROLLING_FILE_APPENDER" />
+	    </logger -->
+    </springProfile>
+    
     <root level="INFO">
         <appender-ref ref="SAMPLE" />
     </root>

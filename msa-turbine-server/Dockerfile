@@ -1,7 +1,12 @@
 #FROM java:8-jre
 FROM openjdk:8-jre
 
-ADD ./target/msa-turbine-server.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/msa-turbine-server.jar"]
+ENV CONFIG_SERVICE_NAME msa-config-server
+ENV PROFILES dev
+ENV JAR_FILE msa-turbine-server.jar
+
+ADD ./target/${JAR_FILE} /app/
+ENTRYPOINT [ "sh", "-c" ]
+CMD ["exec java -Xmx200m -Dspring.profiles.active=${PROFILES} -jar /app/${JAR_FILE}"]
 
 EXPOSE 9010

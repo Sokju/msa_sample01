@@ -12,7 +12,6 @@ spring:
         git: 
           uri: "https://github.com/Sokju/msa_sample01"
           search-paths: platform_config
-
 #  cloud:
 #    config:
 #      server:
