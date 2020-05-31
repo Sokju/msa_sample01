@@ -91,9 +91,20 @@ ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
    ReadTimeout: 2000       # Connection 맺은 후 response 받기 까지 delay time
 
-#turbine 수집을 위한 endpoint 활성화        
+#turbine 수집을 위한 endpoint 활성화  
 management:
+  endpoint:
+    refresh:
+      enabled: true
+    restart:
+      enabled: true
+    health:
+      enabled: true
+    hystrix:
+      stream:
+        enabled: true
   endpoints:
+    enabled-by-default: false
     web:
       exposure:
-        include: "*"
+        include: ["health", "hystrix.stream"]      
