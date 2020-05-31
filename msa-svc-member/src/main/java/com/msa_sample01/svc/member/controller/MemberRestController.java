@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.msa_sample01.svc.member.domain.Member;
 import com.msa_sample01.svc.member.service.MemberService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @RefreshScope
 @RestController
 public class MemberRestController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	@Value("${custom.inject.timeout}")
+    private String timeOut;
 	
 	@Autowired
 	private MemberService	memberService;
@@ -69,7 +72,7 @@ public class MemberRestController {
 		log.debug("############ getMemberByName : " + memberName);
 		
 		try {
-            Thread.sleep(10000);
+            Thread.sleep(Integer.parseInt(timeOut));
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
         	log.error("MemberByName", e);
