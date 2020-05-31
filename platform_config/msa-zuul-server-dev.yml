@@ -86,6 +86,8 @@ hystrix:
   command:
     default:
       execution:
+        isolation:
+          strategy: THREAD
         timeout: enabled
       isolation:
         thread:
