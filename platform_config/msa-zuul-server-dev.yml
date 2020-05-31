@@ -102,8 +102,8 @@ hystrix:
           timeInMilliseconds: 10000 #서킷 브레이커가 열리기 위한 조건 체크 시간, 기본값은 10초(default : 10000)
   threadpool:
     default:
-      coreSize: 10      #Thread 를 이용할 경우 core size를 지정하는 속성(default : 10)
-      maximumSize: 10   #Prior to 1.5.9, core and maximum sizes were always equal.
+      coreSize: 2      #Thread 를 이용할 경우 core size를 지정하는 속성(default : 10)
+      maximumSize: 2   #Prior to 1.5.9, core and maximum sizes were always equal.
           
           
 ribbon:
