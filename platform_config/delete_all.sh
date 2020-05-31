@@ -11,7 +11,6 @@ kubectl delete -f msa-eureka-server/service.yml
 kubectl delete -f msa-eureka-server/ingress.yml
 kubectl delete -f msa-config-server/deployment.yml
 kubectl delete -f msa-config-server/service.yml
-kubectl delete -f msa-config-server/ingress.yml
 kubectl delete -f msa-turbine-server/deployment.yml
 kubectl delete -f msa-turbine-server/service.yml
 kubectl delete -f msa-turbine-server/ingress.yml
@@ -21,4 +20,7 @@ kubectl delete -f msa-zipkin-server/ingress.yml
 kubectl delete -f msa-auth-server/deployment.yml
 kubectl delete -f msa-auth-server/service.yml
 kubectl delete -f msa-auth-server/ingress.yml
+kubectl delete -f msa-svc-ui/deployment.yml
+kubectl delete -f msa-svc-ui/service.yml
+kubectl delete -f msa-svc-ui/ingress.yml
 

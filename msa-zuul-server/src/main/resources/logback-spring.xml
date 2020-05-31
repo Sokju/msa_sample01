@@ -10,12 +10,16 @@
         </layout>
     </appender>
     <appender name="SAMPLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- appender name="SAMPLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <includeCallerData>true</includeCallerData>
             <fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames"/>   
-            <!-- pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern -->
         </encoder>
-    </appender>
+    </appender -->
 
     <appender name="DAILY_ROLLING_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS_PATH}/logback.log</file>
