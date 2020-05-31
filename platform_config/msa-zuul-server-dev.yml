@@ -89,7 +89,7 @@ hystrix:
         timeout: enabled
       isolation:
         thread:
-          timeoutInMilliseconds: 10000  #Hystrix 가 적용된 메서드의 타임아웃 지정 (default : 1000)
+          timeoutInMilliseconds: 30000  #Hystrix 가 적용된 메서드의 타임아웃 지정 (default : 1000)
       fallback:
         enabled: true #(default : true)
       circuitBreaker:
@@ -108,7 +108,7 @@ hystrix:
           
 ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
-   ReadTimeout: 3000       # Connection 맺은 후 response 받기 까지 delay time
+   ReadTimeout: 30000       # Connection 맺은 후 response 받기 까지 delay time
 
 #turbine 수집을 위한 endpoint 활성화  
 management:
