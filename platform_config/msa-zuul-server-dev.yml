@@ -106,7 +106,12 @@ management:
       stream:
         enabled: true
   endpoints:
-    enabled-by-default: false
     web:
       exposure:
-        include: ["health", "hystrix.stream"]      
+        include: "*"           
+#  endpoints:
+#    enabled-by-default: false
+#    web:
+#      exposure:
+#        include: ["health", "hystrix.stream"]      
+        

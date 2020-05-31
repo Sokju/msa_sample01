@@ -16,7 +16,7 @@ public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
       .antMatchers("/v1/member/api-docs/**").permitAll()
       .antMatchers("/v1/order/api-docs/**").permitAll()
       .antMatchers("/v1/member/**").hasRole("ADMIN")
-      .antMatchers("/v1/order/**").hasRole("USER")
+      .antMatchers("/v1/order/**").hasAnyRole("ADMIN","USER")
       .anyRequest().permitAll()	
       ;
       
