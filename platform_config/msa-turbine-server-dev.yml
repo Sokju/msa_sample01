@@ -19,7 +19,7 @@ eureka:
       defaultZone: http://msa-eureka-server:8761/eureka/
     
 turbine:
-  appConfig: msa-svc-member,msa-svc-order
+  appConfig: msa-svc-member,msa-svc-order,msa-zuul-server
   clusterNameExpression: new String("default")      
   
  #Stream URL : http://msa-turbine-server:9010/turbine.stream
