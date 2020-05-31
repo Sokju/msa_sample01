@@ -1,8 +1,11 @@
 package com.msa_sample01.svc.member.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.msa_sample01.svc.member.domain.Member;
 
 
 //name 				: 서비스ID 혹은 논리적인 이름, spring-cloud의 eureka, ribbon에 사용
@@ -19,6 +22,6 @@ public interface OrderServiceClient {
 //	ResponseEntity<Member> order(@RequestBody Member member);
 
 	@RequestMapping(value = "/v1/order", method = RequestMethod.POST)
-	void order(String member);
+	ResponseEntity<Member> order(String member);
 
 }

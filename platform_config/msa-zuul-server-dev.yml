@@ -87,7 +87,17 @@ hystrix:
         timeout: enabled
       isolation:
         thread:
-          timeoutInMilliseconds: 60000
+          timeoutInMilliseconds: 60000  #Hystrix 가 적용된 메서드의 타임아웃 지정
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000 #서킷 브레이커가 열리기 위한 조건 체크 시간, 기본값은 10초(10000)   
+      circuitBreaker:
+        errorThresholdPercentage: 50  #서킷 브레이커가 발동할 에러 퍼센트 지정 기본값은 50
+      circuitBreaker:
+        requestVolumeThreshold: 20 #서킷 브레이커가 열리기 위한 최소 요청 조건
+      circuitBreaker:
+        sleepWindowInMilliseconds: 5000 #서킷 브레이커가 열렸을때 얼마나 지속될지 설정. 기본값은 5초(5000)
+      coreSize: 10  #Thread 를 이용할 경우 core size를 지정하는 속성    기본 coreSize 는 10      
           
 ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time

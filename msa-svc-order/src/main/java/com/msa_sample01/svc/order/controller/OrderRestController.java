@@ -37,7 +37,7 @@ public class OrderRestController {
 //		
 //		return new ResponseEntity<OrderCVO>(orderCVO, HttpStatus.OK);
 //	}
-	public void order(@RequestBody String member) {
+	public ResponseEntity<OrderCVO> order(@RequestBody String member) {
 		
 		log.debug("member : {}", member);
 		//order
@@ -45,6 +45,12 @@ public class OrderRestController {
 
 		//kafka
 		//kafkaProducer.send("kafka-pub", orderCVO);
+		
+		OrderCVO orderCVO = new OrderCVO();
+		orderCVO.setMemberName(member);
+		orderCVO.setOrderName("order");
+		
+		return new ResponseEntity<OrderCVO>(orderCVO, HttpStatus.OK);
 		
 	}
 }

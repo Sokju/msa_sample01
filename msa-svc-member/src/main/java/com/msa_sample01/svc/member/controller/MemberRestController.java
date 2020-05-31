@@ -56,17 +56,25 @@ public class MemberRestController {
 			넷플릭스에서는 공식 가이드에 왠만하면 Thread 방식을 권장.(디폴트 설정도 Thread 방식이다.) 기본 coreSize 는 10
 	 */
 	
-	@HystrixCommand(fallbackMethod = "fallbackMemberByName", commandProperties = {
-	   @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "500"),
-	   @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000"),
-	   @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "10"),
-	   @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
-	   @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
-	}, threadPoolProperties = @HystrixProperty(name = "coreSize", value = "100"))
+//	@HystrixCommand(fallbackMethod = "fallbackMemberByName", commandProperties = {
+//	   @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "500"),
+//	   @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000"),
+//	   @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "10"),
+//	   @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
+//	   @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
+//	}, threadPoolProperties = @HystrixProperty(name = "coreSize", value = "100"))
 	@RequestMapping(value = "/v1/member/{memberName}", method = RequestMethod.GET)
 	public Member getMemberByName(@PathVariable("memberName") String memberName) {
 		
 		log.debug("############ getMemberByName : " + memberName);
+		
+		try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+        	log.error("MemberByName", e);
+            e.printStackTrace();
+        }
 		
 		return memberService.findByName(memberName);
 	}
