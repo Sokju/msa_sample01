@@ -100,8 +100,6 @@ hystrix:
       metrics:
         rollingStats:
           timeInMilliseconds: 10000 #서킷 브레이커가 열리기 위한 조건 체크 시간, 기본값은 10초(default : 10000)
-      circuitBreaker:
-        errorThresholdPercentage: 50  #서킷 브레이커가 발동할 에러 퍼센트 지정 기본값은 50
   threadpool:
     default:
       coreSize: 10      #Thread 를 이용할 경우 core size를 지정하는 속성(default : 10)
