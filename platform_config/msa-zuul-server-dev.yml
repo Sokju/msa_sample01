@@ -86,12 +86,11 @@ hystrix:
   command:
     default:
       execution:
+        timeout: enabled
         isolation:
           strategy: THREAD
-        timeout: enabled
-      isolation:
-        thread:
-          timeoutInMilliseconds: 30000  #Hystrix 가 적용된 메서드의 타임아웃 지정 (default : 1000)
+          thread:
+            timeoutInMilliseconds: 30000  #Hystrix 가 적용된 메서드의 타임아웃 지정 (default : 1000)
       fallback:
         enabled: true #(default : true)
       circuitBreaker:
