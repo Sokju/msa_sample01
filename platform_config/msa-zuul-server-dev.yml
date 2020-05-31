@@ -108,7 +108,7 @@ hystrix:
           
 ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
-   ReadTimeout: 5000       # Connection 맺은 후 response 받기 까지 delay time
+   ReadTimeout: 3000       # Connection 맺은 후 response 받기 까지 delay time
 
 #turbine 수집을 위한 endpoint 활성화  
 management:

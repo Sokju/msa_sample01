@@ -77,4 +77,4 @@ springfox:
 
 custom:
   inject:
-    timeout: 1000
+    timeout: 3000
