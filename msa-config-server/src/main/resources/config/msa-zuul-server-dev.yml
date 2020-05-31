@@ -82,10 +82,12 @@ zuul:
 
 hystrix:
   command:
-    member:
+    default:
+      execution:
+        timeout: enabled
       isolation:
         thread:
-          timeoutInMilliseconds: 600000
+          timeoutInMilliseconds: 60000
           
 ribbon:
    ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
