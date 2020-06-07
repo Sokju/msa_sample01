@@ -128,7 +128,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"           
+        include: ["health", "hystrix.stream", "refresh"]         
 #  endpoints:
 #    enabled-by-default: false
 #    web:
