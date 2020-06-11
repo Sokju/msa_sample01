@@ -1,5 +1,5 @@
 
-MSA 샘플(Spring Cloud + Netflix OSS)
+MSA 샘플 유형1(Spring Cloud + Netflix OSS)
 ======================
 
 # 1. msa-config-server
