@@ -47,7 +47,9 @@ eureka:
     serviceUrl:
       defaultZone: http://msa-eureka-server:8761/eureka/
             
-#Zuul Routing    
+###############################        
+## Zuul Routing    
+###############################
 zuul:
   ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
   #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
@@ -74,34 +76,52 @@ zuul:
       serviceId: msa-svc-member   #spring application name
       stripPrefix: false  
       
+  ribbonIsolationStrategy: THREAD
+  thread-pool:
+    use-separate-thread-pools: true      
 
-# 타임아웃 설정   
+# Zuul Host 타임아웃 설정   
   host:
-    connect-timeout-millis: 3000
-    socket-timeout-millis: 3000
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 5000
+    max-total-connections: 200
+    max-per-route-connections: 20
+# SEMAPHORE 설정
+#  semaphore:
+#    max-semaphore: 500
 
+###############################        
+## Hystrix Command Configuration    
+###############################    
 hystrix:
   command:
     default:
       execution:
         timeout: enabled
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000  #Hystrix 가 적용된 메서드의 타임아웃 지정
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000  # Hystrix 가 적용된 메서드의 타임아웃 지정 (default : 1000)
+      fallback:
+        enabled: true                     # (default : true)
+      circuitBreaker:
+        enabled: true                     # (default : true)
+        requestVolumeThreshold: 5         # 서킷 브레이커가 열리기 위한 최소 요청 조건(default : 20)
+        sleepWindowInMilliseconds : 5000  # 서킷 브레이커가 열렸을때 얼마나 지속될지 설정(default : 5000)
+        errorThresholdPercentage: 50      # 서킷 브레이커가 발동할 에러 퍼센트 지정(default : 50)
       metrics:
         rollingStats:
-          timeInMilliseconds: 10000 #서킷 브레이커가 열리기 위한 조건 체크 시간, 기본값은 10초(10000)   
-      circuitBreaker:
-        errorThresholdPercentage: 50  #서킷 브레이커가 발동할 에러 퍼센트 지정 기본값은 50
-      circuitBreaker:
-        requestVolumeThreshold: 20 #서킷 브레이커가 열리기 위한 최소 요청 조건
-      circuitBreaker:
-        sleepWindowInMilliseconds: 5000 #서킷 브레이커가 열렸을때 얼마나 지속될지 설정. 기본값은 5초(5000)
-      coreSize: 10  #Thread 를 이용할 경우 core size를 지정하는 속성    기본 coreSize 는 10      
+          timeInMilliseconds: 30000       # 서킷 브레이커가 열리기 위한 조건 체크 시간, 기본값은 10초(default : 10000)
+  threadpool:
+    default:
+      coreSize: 10                        # Thread 를 이용할 경우 core size를 지정하는 속성(default : 10)
+      maximumSize: 20                     # Prior to 1.5.9, core and maximum sizes were always equal.
+      allowMaximumSizeToDivergeFromCoreSize: true # will return threads to the system during periods of relative inactivity
+      keepAliveTimeMinutes: 1             # how long a thread will go unused before being released
           
 ribbon:
-   ConnectTimeout: 5000    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
-   ReadTimeout: 2000       # Connection 맺은 후 response 받기 까지 delay time
+
+  ConnectTimeout: 1000                    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
+  ReadTimeout: 10000                      # Connection 맺은 후 response 받기 까지 delay time
 
 #turbine 수집을 위한 endpoint 활성화  
 management:
@@ -118,10 +138,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"           
-#  endpoints:
-#    enabled-by-default: false
-#    web:
-#      exposure:
-#        include: ["health", "hystrix.stream"]      
+        include: ["health", "hystrix.stream", "refresh"]         
+
+
         

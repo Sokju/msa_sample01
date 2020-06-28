@@ -25,7 +25,7 @@ public class MemberRestController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	@Value("${custom.inject.timeout}")
+	@Value("${application.fault.injection.timeout}")
     private String timeOut;
 	
 	@Autowired

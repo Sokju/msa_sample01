@@ -1,10 +1,10 @@
-drop sequence if exists hibernate_sequence;
-DROP TABLE IF EXISTS oauth_client_details;
-DROP TABLE IF EXISTS members;
+--drop sequence if exists hibernate_sequence;
+--DROP TABLE IF EXISTS oauth_client_details;
+--DROP TABLE IF EXISTS members;
 
-create sequence hibernate_sequence start with 1 increment by 1;
+create sequence IF NOT EXISTS hibernate_sequence start with 1 increment by 1;
 
-CREATE TABLE `oauth_client_details` (
+CREATE TABLE IF NOT EXISTS `oauth_client_details` (
   `client_id` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   `resource_ids` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `client_secret` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE `oauth_client_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE `members` (
+CREATE TABLE IF NOT EXISTS `members` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(200) COLLATE utf8_unicode_ci NOT NULL,

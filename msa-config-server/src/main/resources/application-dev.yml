@@ -11,7 +11,9 @@ spring:
       server:
         git: 
           uri: "https://github.com/Sokju/msa_sample01"
-          search-paths: platform_config
+          search-paths: msa-config-server/src/main/resource
+
+#Filesystem 기반 설정          
 #  cloud:
 #    config:
 #      server:

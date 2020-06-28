@@ -1,3 +1,5 @@
+DELETE FROM oauth_client_details where client_id = 'testoauth2';
+
 INSERT INTO oauth_client_details
 (
     client_id, 
@@ -26,6 +28,8 @@ VALUES
     null,
     null
 );
+
+delete from members where email in ('admin@sample01.com','tester@sample01.com','developer@sample01.com');
 
 insert into members(email, password, name, comment, user_type, reg_date) values('admin@sample01.com','{bcrypt}$2a$10$QISl5pkHGjqmtzhMHHk6SeIoBP8Pen5ShVMSnn5fXpPe/QvWctg32', 'james', 'Administrator','1', now());
 insert into members(email, password, name, comment, user_type, reg_date) values('tester@sample01.com','{bcrypt}$2a$10$QISl5pkHGjqmtzhMHHk6SeIoBP8Pen5ShVMSnn5fXpPe/QvWctg32', 'john', 'Tester','2', now());
